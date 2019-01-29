@@ -34,15 +34,10 @@ export default {
   },
   asyncData() {
     return axios
-      .all([
-        axios.get(`${movieDbNowPlayingUrl}?api_key=${movieDbApiKey}&language=en-US&page=1&region=US`),
-        axios.get(`${gnoteShowtimesUrl}?startDate=${today}&zip=${zipCode}&api_key=${gnoteApiKey}`)
-      ])
+      .all([axios.get(`${movieDbNowPlayingUrl}?api_key=${movieDbApiKey}&language=en-US&page=1&region=US`), axios.get(`${gnoteShowtimesUrl}?startDate=${today}&zip=${zipCode}&api_key=${gnoteApiKey}`)])
       .then(
         axios.spread((movieDbRes, graceNoteRes) => {
-          const movieDbResFiltered = movieDbRes.data.results.filter(mdbMovie =>
-            graceNoteRes.data.some(gnoteMovie => gnoteMovie.title === mdbMovie.title)
-          );
+          const movieDbResFiltered = movieDbRes.data.results.filter(mdbMovie => graceNoteRes.data.some(gnoteMovie => gnoteMovie.title === mdbMovie.title));
 
           for (let i = 0; i < movieDbResFiltered.length; i += 1) {
             const gnIdx = graceNoteRes.data.findIndex(gnoteMovie => gnoteMovie.title === movieDbResFiltered[i].title);
@@ -53,6 +48,11 @@ export default {
               movieDbResFiltered[i].runtime = graceNoteRes.data[gnIdx].runTime;
               movieDbResFiltered[i].ratings = graceNoteRes.data[gnIdx].ratings;
               movieDbResFiltered[i].shortDescription = graceNoteRes.data[gnIdx].shortDescription;
+              movieDbResFiltered[i].longDescription = graceNoteRes.data[gnIdx].longDescription;
+              movieDbResFiltered[i].topCast = graceNoteRes.data[gnIdx].topCast;
+              movieDbResFiltered[i].releaseDate = graceNoteRes.data[gnIdx].releaseDate;
+              movieDbResFiltered[i].directors = graceNoteRes.data[gnIdx].directors;
+              movieDbResFiltered[i].advisories = graceNoteRes.data[gnIdx].advisories;
             }
           }
 
