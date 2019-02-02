@@ -2,32 +2,40 @@
   <section id="details-section">
     <div class="container text-light pt-5">
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <h5>Synopsis</h5>
-          <span>On the run in the year 1987, Bumblebee the Autobot seeks refuge in a junkyard in a small California beach town. Charlie, on the brink of turning 18 years old and trying to find her place in the world, soon discovers the battle-scarred and broken Bumblebee. When Charlie revives him, she quickly learns that this is no ordinary yellow Volkswagen.</span>
+          <span>{{ movie.longDescription }}</span>
           <div class="row my-5">
             <div class="col-6">
               <h5>Cast</h5>
-              <p class="m-0">Hailee Steinfeld, John Cena, Jorge Lendeborg Jr.</p>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item v-for="(cast, index) in movie.topCast" :key="index">{{ cast }}</b-list-group-item>
+              </b-list-group>
             </div>
             <div class="col-6">
               <h5>Release Date</h5>
-              <p class="m-0">December 21, 2018</p>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item>{{ movie.releaseDate }}</b-list-group-item>
+              </b-list-group>
             </div>
           </div>
           <div class="row my-5">
             <div class="col-6">
               <h5>Director</h5>
-              <p class="m-0">Travis Knight</p>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item v-for="(director, index) in movie.directors" :key="index">{{ director }}</b-list-group-item>
+              </b-list-group>
             </div>
             <div class="col-6">
               <h5>Advisories</h5>
-              <p class="m-0">Adult Situations, Violence</p>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item v-for="(advisory, index) in movie.advisories" :key="index">{{ advisory }}</b-list-group-item>
+              </b-list-group>
             </div>
           </div>
         </div>
-        <div class="col-md-3">
-          <img src="https://image.tmdb.org/t/p/original/fw02ONlDhrYjTSZV8XO6hhU3ds3.jpg" alt class="d-none d-md-block">
+        <div class="col-md-4">
+          <img :src="BASE_IMAGE_URL + movie.poster_path" :alt="movie.title" class="d-none d-md-block">
         </div>
       </div>
     </div>
@@ -35,7 +43,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    movie: {
+      type: Object,
+      default: null
+    }
+  },
+  computed: {
+    BASE_IMAGE_URL: () => "https://image.tmdb.org/t/p/original/"
+  }
+};
 </script>
 
 <style>

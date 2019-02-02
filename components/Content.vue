@@ -9,7 +9,7 @@
       </b-nav>
       <b-card-body id="nav-scroller" ref="content" style="position:relative; overflow-y:scroll; overflow: hidden">
         <div id="showtimes-section" class="text-center text-light py-5">Showtimes</div>
-        <Details id="details-section"/>
+        <Details id="details-section" :movie="movie"/>
         <div id="trailers-section" class="text-center text-light py-5">Trailers</div>
         <div id="reviews-section" class="text-center text-light py-5">Reviews</div>
       </b-card-body>
@@ -26,6 +26,12 @@ import Details from "./Details.vue";
 export default {
   components: {
     Details
+  },
+  props: {
+    movie: {
+      type: Object,
+      default: null
+    }
   },
   methods: {
     scrollIntoView(evt) {

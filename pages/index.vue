@@ -1,7 +1,13 @@
 <template>
   <section class="container-fluid">
-    <Poster :movies="movieDbMovies"/>
-    <Content/>
+    <div v-swiper:mySwiper="swiperOption">
+      <div class="swiper-wrapper">
+        <div v-for="movie in movieDbMovies" :key="movie.id" class="swiper-slide">
+          <Poster :movie="movie"/>
+          <Content :movie="movie"/>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -29,20 +35,29 @@ export default {
   },
   data() {
     return {
-      movieDbMovies: null
+      movieDbMovies: null,
+      swiperOption: {
+        speed: 800,
+        loop: false,
+        slidesPerView: "auto",
+        centeredSlides: true,
+        spaceBetween: 15,
+        pagination: {
+          el: ".swiper-pagination"
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      }
     };
   },
   asyncData() {
     return axios
-      .all([
-        axios.get(`${movieDbNowPlayingUrl}?api_key=${movieDbApiKey}&language=en-US&page=1&region=US`),
-        axios.get(`${gnoteShowtimesUrl}?startDate=${today}&zip=${zipCode}&api_key=${gnoteApiKey}`)
-      ])
+      .all([axios.get(`${movieDbNowPlayingUrl}?api_key=${movieDbApiKey}&language=en-US&page=1&region=US`), axios.get(`${gnoteShowtimesUrl}?startDate=${today}&zip=${zipCode}&api_key=${gnoteApiKey}`)])
       .then(
         axios.spread((movieDbRes, graceNoteRes) => {
-          const movieDbResFiltered = movieDbRes.data.results.filter(mdbMovie =>
-            graceNoteRes.data.some(gnoteMovie => gnoteMovie.title === mdbMovie.title)
-          );
+          const movieDbResFiltered = movieDbRes.data.results.filter(mdbMovie => graceNoteRes.data.some(gnoteMovie => gnoteMovie.title === mdbMovie.title));
 
           for (let i = 0; i < movieDbResFiltered.length; i += 1) {
             const gnIdx = graceNoteRes.data.findIndex(gnoteMovie => gnoteMovie.title === movieDbResFiltered[i].title);
@@ -53,6 +68,11 @@ export default {
               movieDbResFiltered[i].runtime = graceNoteRes.data[gnIdx].runTime;
               movieDbResFiltered[i].ratings = graceNoteRes.data[gnIdx].ratings;
               movieDbResFiltered[i].shortDescription = graceNoteRes.data[gnIdx].shortDescription;
+              movieDbResFiltered[i].longDescription = graceNoteRes.data[gnIdx].longDescription;
+              movieDbResFiltered[i].topCast = graceNoteRes.data[gnIdx].topCast;
+              movieDbResFiltered[i].releaseDate = graceNoteRes.data[gnIdx].releaseDate;
+              movieDbResFiltered[i].directors = graceNoteRes.data[gnIdx].directors;
+              movieDbResFiltered[i].advisories = graceNoteRes.data[gnIdx].advisories;
             }
           }
 
