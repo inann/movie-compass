@@ -4,7 +4,7 @@
       <div class="swiper-wrapper">
         <div v-for="movie in movieDbMovies" :key="movie.id" class="swiper-slide">
           <Poster :movie="movie"/>
-          <Content/>
+          <Content :movie="movie"/>
         </div>
       </div>
     </div>
