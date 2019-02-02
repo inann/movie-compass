@@ -1,7 +1,13 @@
 <template>
   <section class="container-fluid">
-    <Poster :movies="movieDbMovies"/>
-    <Content/>
+    <div v-swiper:mySwiper="swiperOption">
+      <div class="swiper-wrapper">
+        <div v-for="movie in movieDbMovies" :key="movie.id" class="swiper-slide">
+          <Poster :movie="movie"/>
+          <Content/>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -29,7 +35,21 @@ export default {
   },
   data() {
     return {
-      movieDbMovies: null
+      movieDbMovies: null,
+      swiperOption: {
+        speed: 800,
+        loop: false,
+        slidesPerView: "auto",
+        centeredSlides: true,
+        spaceBetween: 15,
+        pagination: {
+          el: ".swiper-pagination"
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      }
     };
   },
   asyncData() {
