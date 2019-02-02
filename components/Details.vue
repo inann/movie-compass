@@ -8,27 +8,29 @@
           <div class="row my-5">
             <div class="col-6">
               <h5>Cast</h5>
-              <ul class="m-0">
-                <li v-for="(cast, index) in movie.topCast" :key="index">{{ cast }}</li>
-              </ul>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item v-for="(cast, index) in movie.topCast" :key="index">{{ cast }}</b-list-group-item>
+              </b-list-group>
             </div>
             <div class="col-6">
               <h5>Release Date</h5>
-              <p class="m-0">{{ movie.releaseDate }}</p>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item>{{ movie.releaseDate }}</b-list-group-item>
+              </b-list-group>
             </div>
           </div>
           <div class="row my-5">
             <div class="col-6">
               <h5>Director</h5>
-              <ul class="m-0">
-                <li v-for="(director, index) in movie.directors" :key="index">{{ director }}</li>
-              </ul>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item v-for="(director, index) in movie.directors" :key="index">{{ director }}</b-list-group-item>
+              </b-list-group>
             </div>
             <div class="col-6">
               <h5>Advisories</h5>
-              <ul class="m-0">
-                <li v-for="(advisory, index) in movie.advisories" :key="index">{{ advisory }}</li>
-              </ul>
+              <b-list-group class="m-0 details-list">
+                <b-list-group-item v-for="(advisory, index) in movie.advisories" :key="index">{{ advisory }}</b-list-group-item>
+              </b-list-group>
             </div>
           </div>
         </div>
