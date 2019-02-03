@@ -8,29 +8,27 @@
           <div class="row my-5">
             <div class="col-6">
               <h5>Cast</h5>
-              <b-list-group class="m-0 details-list">
-                <b-list-group-item v-for="(cast, index) in movie.topCast" :key="index">{{ cast }}</b-list-group-item>
-              </b-list-group>
+              <ul class="m-0 details-list">
+                <li v-for="(cast, index) in movie.topCast" :key="index">{{ cast }}</li>
+              </ul>
             </div>
             <div class="col-6">
               <h5>Release Date</h5>
-              <b-list-group class="m-0 details-list">
-                <b-list-group-item>{{ movie.releaseDate }}</b-list-group-item>
-              </b-list-group>
+              <p class="m-0 details-list">{{ movie.releaseDate }}</p>
             </div>
           </div>
           <div class="row my-5">
             <div class="col-6">
               <h5>Director</h5>
-              <b-list-group class="m-0 details-list">
-                <b-list-group-item v-for="(director, index) in movie.directors" :key="index">{{ director }}</b-list-group-item>
-              </b-list-group>
+              <ul class="m-0 details-list">
+                <li v-for="(director, index) in movie.directors" :key="index">{{ director }}</li>
+              </ul>
             </div>
             <div class="col-6">
               <h5>Advisories</h5>
-              <b-list-group class="m-0 details-list">
-                <b-list-group-item v-for="(advisory, index) in movie.advisories" :key="index">{{ advisory }}</b-list-group-item>
-              </b-list-group>
+              <ul class="m-0 details-list">
+                <li v-for="(advisory, index) in movie.advisories" :key="index">{{ advisory }}</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -57,4 +55,21 @@ export default {
 </script>
 
 <style>
+.details-list {
+  display: inline;
+  list-style: none;
+  padding-left: 0;
+}
+
+.details-list li {
+  display: inline;
+}
+
+.details-list li:after {
+  content: ", ";
+}
+
+.details-list li:last-child:after {
+  content: "";
+}
 </style>

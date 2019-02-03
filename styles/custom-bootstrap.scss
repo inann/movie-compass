@@ -47,14 +47,3 @@ a:hover {
 .card-header ul > li {
   @extend .mx-sm-4;
 }
-
-.details-list {
-  display: block;
-  width: 100%;
-  float: left;
-}
-
-.details-list .list-group-item {
-  border-color: $isabelline;
-  background-color: transparent;
-}
